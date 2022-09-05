@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "knex": "^2.2.0",
+    "mysql": "^2.18.1",
+    "objection": "^3.0.1"
+  },
+  "scripts": {
+    "dev": "nodemon bootstrap/index.js",
+    "knex": "knex"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
