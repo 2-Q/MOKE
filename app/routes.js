@@ -1,17 +1,10 @@
-import * as express from 'express'
-const routes = express.Router()
+const { login } = require("./Http/Controller/Auth/LoginController")
+const { index } = require("./Http/Controller/UserController")
+const { auth } = require("./Http/Middleware/Auth")
 
 
-
-
-routes.get('/', (req, res) => {
-    res.send('aa')
-})
-
-
-
-
-
-
-
-export default routes;
+module.exports = (app) => {
+    app.get('/', index)
+    app.post('/login', login)
+    app.get('/authed', auth, index)
+}

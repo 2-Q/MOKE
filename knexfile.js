@@ -1,28 +1,14 @@
+const db = require('./config/db');
+
 // Update with your config settings.
-// import * as dotenv from 'dotenv'
-// dotenv.config()
+require('dotenv').config()
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {
 
-  development: {
-    client: 'mysql',
-    connection: {
-      host: '127.0.0.1', //process.env.DB_HOST
-      user: 'root', //process.env.DB_USERNAME
-      password: '', //process.env.DB_PASSWORD
-      database: 'my_db', //process.env.DB_DATABASE_PRESENCE
-    },
-    pool: { min: 0, max: 3 }, //Menggunakan fungsi pool agar menjaga koneksi ke DB tetep tersambung
-    migrations: {
-      directory: './database/migrations'
-    },
-    seeds: {
-      directory: './database/seeds',
-    },
-  },
+  development: db,
 
   staging: {
     client: 'postgresql',
