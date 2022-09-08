@@ -1,7 +1,7 @@
 require('dotenv').config()
 
-// exports.db = 
-const db = require('knex')({
+
+exports.dbConfig = {
     client: 'mysql',
     connection: {
         host: String(process.env.DB_HOST ?? '127.0.0.1'),
@@ -16,6 +16,6 @@ const db = require('knex')({
     seeds: {
         directory: './database/seeds',
     },
-});
+}
 
-module.exports = db
+exports.dbConnection = require('knex')(this.dbConfig);

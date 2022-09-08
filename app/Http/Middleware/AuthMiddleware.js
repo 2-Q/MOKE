@@ -1,4 +1,5 @@
 const UserModel = require('../../Model/User');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 
@@ -15,7 +16,8 @@ exports.auth = (req, res, next) => {
         if (err) return res.status(401).end();
 
         // sync check db
-        const user = await UserModel.where(decoded).first();
+        const { id, email } = decoded
+        const user = await UserModel.query().where({ id, email }).first();
         if (!user) return res.status(401).end();
 
         // add to locals

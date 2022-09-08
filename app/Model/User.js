@@ -1,7 +1,7 @@
 const { Model } = require('objection');
-const db = require('../../config/db');
+const { dbConnection } = require('../../config/db');
 
-Model.knex(db);
+Model.knex(dbConnection);
 
 class UserModel extends Model {
     static get tableName() {

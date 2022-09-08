@@ -1,6 +1,6 @@
 //load file
 import express from "express"
-import routes from "../app/routes.js"
+import routes from "../app/routes.js.js"
 import localVariables from "./localVariables.js";
 
 // init express

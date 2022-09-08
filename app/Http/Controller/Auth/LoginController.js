@@ -1,28 +1,35 @@
 const UserModel = require("../../../Model/User");
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 
-exports.login = async (req, res) => {
-    const { email, password } = req.body
+class LoginController {
+    static async login(req, res) {
+        const { email, password } = req.body
 
-    const user = await UserModel.where({ email }).first();
+        const user = await UserModel.query().where({ email }).first();
+        if (!user) return res.status(401).json({
+            message: 'Email tidak terdaftar!'
+        })
 
-    if (!user) return res.status(401).end()
+        const checkPassword = await bcrypt.compare(password, user.password)
+        if (!checkPassword) return res.status(401).json({
+            message: 'Password salah!'
+        })
 
-    const checkPassword = await bcrypt.compare(password, user.password)
+        const token = jwt.sign({
+            id: user.id,
+            email: user.email
+        }, (process.env.KEY_APP ?? 'ThePrivateKey'), {
+            expiresIn: '7d'
+        })
 
-    if (!checkPassword) return res.status(401).end()
-
-    const token = jwt.sign({
-        id: user.id,
-        email: user.email
-    }, (process.env.KEY_APP ?? 'ThePrivateKey'), {
-        expiresIn: '7d'
-    })
-
-    res.status(200).json({
-        message: "hello",
-        token
-    })
+        return res.status(200).json({
+            message: "hello",
+            token
+        })
+    }
 }
+
+module.exports = LoginController
